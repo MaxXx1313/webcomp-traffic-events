@@ -1,0 +1,21 @@
+{
+  "name": "noi-brennerlec",
+  "private": true,
+  "scripts": {
+    "build": "stencil build --config stencil.config.ts --prod",
+    "postbuild": "./scripts/generate-bundles.js",
+    "start": "stencil build --config stencil.config.ts --dev --watch --serve",
+    "docs": "stencil build --config stencil.config.ts --docs",
+    "test": "echo 'No tests yet'",
+    "lint": "reuse lint"
+  },
+  "dependencies": {
+    "@stencil/core": "^4.43.4",
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.16",
+    "@types/node": "^22",
+    "rollup": "^4.60.1"
+  }
+}

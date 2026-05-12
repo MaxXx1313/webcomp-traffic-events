@@ -1,0 +1,113 @@
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+<!-- Example of how you implement a webcomponent in a website -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Hello World!</title>
+</head>
+
+<body>
+<h1>Road traffic events</h1>
+
+Code Snippet for web build:
+<pre style="overflow: hidden">
+  <code>
+    &lt;noi-a22-road-events style="height: 600px; width: 100%;"&gt;&lt;/noi-a22-road-events&gt;
+
+    &lt;script type="module" src="./noi-a22-road-events.js"&gt;&lt;/script&gt;
+  </code>
+</pre>
+
+
+Output:
+
+<!--  <hello-world name="Hello World!"></hello-world>-->
+<noi-a22-road-events id="webcam" style="height: 600px; width: 100%"></noi-a22-road-events>
+
+<script nomodule src="./noi-a22-road-events.js"></script>
+<script type="module" src="./noi-a22-road-events.esm.js"></script>
+
+
+<div>
+  <button onclick="webcam.style.width = '500px'">size x1</button>
+  <button onclick="webcam.style.width = '800px'">size x2</button>
+  <button onclick="webcam.style.width = '100%'">size full</button>
+  <button onclick="webcam.layout = 'mobile'">layout mobile</button>
+  <button onclick="webcam.layout = 'tablet'">layout tablet</button>
+  <button onclick="webcam.layout = 'desktop'">layout desktop</button>
+  <button onclick="webcam.layout = 'auto'">layout auto</button>
+  <button onclick="webcam.language = 'en'">lang: en</button>
+  <button onclick="webcam.language = 'it'">lang: it</button>
+  <button onclick="webcam.language = 'xx'">lang: xx (missing)</button>
+  <button onclick="webcam.language = null">lang: auto</button>
+  <button onclick="webcam.classList.remove('dark-mode')">styles: default</button>
+  <button onclick="webcam.classList.add('dark-mode')">styles: dark mode</button>
+
+  <!-- font size     -->
+  <script>
+      function changeFontSize(change) {
+        const currentSize = parseInt(webcam.style.fontSize || '16px', 10);
+        webcam.style.fontSize = (currentSize + change) + 'px';
+      }
+    </script>
+    <button onclick="changeFontSize(-1)">font -</button>
+    <button onclick="changeFontSize(1)">font +</button>
+</div>
+<div style="height: 8px"></div>
+<div>
+  <button onclick="webcam.direction = 'north'">d: north</button>
+  <button onclick="webcam.direction = 'south'">d: south</button>
+  <button onclick="webcam.direction = 'both'">d: both</button>
+</div>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet">
+<style>
+  noi-a22-road-events {
+    font-family: "Roboto", serif;
+    outline: 1px solid red;
+    margin: 5px;
+  }
+
+  noi-a22-road-events.dark-mode {
+    font-family: "Roboto", serif;
+    outline: 1px solid red;
+    margin: 5px;
+
+    --color-primary: rgb(224, 224, 224);
+    --color-secondary: rgb(23, 162, 184);
+    --color-text: #FFF;
+    --color-background: #333;
+    --color-shade: #555;
+    --color-border: #A0A0A0;
+    --map-line-color: #5d8d58;
+    --map-marker-color-bg: #282828;
+    --list-highlight: #5a23c7;
+    --map-filter: grayscale(100%) invert(1);
+    --scrollbar-color: #CCC;
+    --scrollbar-bg: #333;
+  }
+
+  noi-a22-road-events.dark-mode::part(panel) {
+    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.25);
+  }
+  noi-a22-road-events.dark-mode::part(menu-btn) {
+    box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.25);
+    border: 1px solid #A0A0A0;
+  }
+</style>
+
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+{
+  "title": "Road webcam",
+  "shortName": "noi-brennerlec",
+  "description": "A responsive webcomponent for showing web camera images on Brennerlec A22 road",
+  "descriptionAbstract": "A responsive webcomponent for showing web camera images on Brennerlec A22 road",
+  "license": "AGPL-3.0-or-later",
+  "repositoryUrl": "https://github.com/noi-techpark/webcomponents-brennerlec.git",
+  "copyrightHolders": [
+    {
+      "name": "NOI",
+      "email": "info@noi.bz.it",
+      "organization": "NOI S.p.A",
+      "organizationUrl": "https://noi.bz.it"
+    }
+  ],
+  "authors": [
+    {
+      "name": "NOI",
+      "email": "digital@noi.bz.it",
+      "organization": "NOI S.p.A",
+      "organizationUrl": "https://noi.bz.it"
+    },
+    {
+      "name": "Solhea",
+      "email": "info@solhea.com",
+      "organization": "Solhea S.R.L.",
+      "organizationUrl": "https://solhea.com"
+    }
+  ],
+  "image": "wcs-logo.png",
+  "searchTags": [],
+  "dist": {
+    "basePath": "dist/bundle/noi-a22-road-events",
+    "files": [
+      "noi-a22-road-events.js",
+      "data_a22-1km.json",
+      "i18n_en.json",
+      "i18n_it.json",
+      "16.png"
+    ],
+    "scripts": [
+      {
+        "file": "noi-a22-road-events.js",
+        "parameter": "type='module'"
+      }
+    ]
+  },
+  "configuration": {
+    "tagName": "noi-a22-road-events",
+    "options": [
+      {
+        "key": "layout",
+        "type": "select",
+        "label": "Layout appearance",
+        "required": false,
+        "options": {
+          "values": [
+            "desktop",
+            "tablet",
+            "mobile",
+            "auto"
+          ],
+          "default": "auto"
+        }
+      },
+      {
+        "key": "language",
+        "type": "select",
+        "label": "Two letter key for the language to be used, if omitted the widget will use the browser language. Fallback is `it`",
+        "required": false,
+        "options": {
+          "values": [
+            "en",
+            "de",
+            "it"
+          ],
+          "default": "it"
+        }
+      },
+      {
+        "key": "direction",
+        "type": "select",
+        "label": "Events direction filter",
+        "required": false,
+        "options": {
+          "values": [
+            "both",
+            "north",
+            "south"
+          ],
+          "default": "both"
+        }
+      },
+      {
+        "key": "style",
+        "type": "text",
+        "label": "CSS style definition",
+        "required": false,
+        "options": {
+          "default": ""
+        }
+      }
+    ]
+  }
+}

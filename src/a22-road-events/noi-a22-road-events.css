@@ -1,0 +1,347 @@
+/*
+ * SPDX-FileCopyrightText: 2025 NOI Techpark <digital@noi.bz.it>
+ *
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+:host {
+
+  /**
+   * @prop --color-primary: Primary color
+   */
+  --color-primary: #0068B4;
+  /**
+   * @prop --color-secondary: Secondary color
+   */
+  --color-secondary: #00A767;
+
+  /**
+   * @prop --color-text: Text color
+   */
+  --color-text: #6792AA;
+  /**
+   * @prop --color-background: Background color
+   */
+  --color-background: #FFFFFF;
+
+  /**
+   * @prop --color-shade: Shade color for traffic info label
+   */
+  --color-shade: #F7F7F7;
+
+  /**
+   * @prop --color-border: Border color
+   */
+  --color-border: #D0D0D0;
+
+  /**
+   * @prop --map-line-color: Map line color
+   */
+  --map-line-color: #3a9c77;
+
+  /**
+   * @prop --map-marker-color: Map marker color
+   */
+  --map-marker-color: var(--map-line-color);
+
+  /**
+   * @prop --map-marker-color-bg: Map marker background
+   */
+  --map-marker-color-bg: #FFFFFF;
+
+  /**
+   * @prop --map-marker-highlight: Map marker highlight color
+   */
+  --map-marker-highlight: var(--color-primary);
+
+  /**
+   * @prop --list-highlight: Event list highlight color
+   */
+  --list-highlight: var(--color-primary);
+
+  /**
+   * @prop --scrollbar-color: Scrollbar thumb color
+   */
+  --scrollbar-color: initial;
+  /**
+   * @prop --scrollbar-bg: Scrollbar background color
+   */
+  --scrollbar-bg: initial;
+}
+
+:host {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  align-items: stretch;
+  font-family: inherit;
+
+  background: var(--color-background);
+  position: relative;
+  font-size: 16px;
+}
+
+.layout__center {
+  position: relative;
+  flex: 1;
+}
+
+
+.layout__panel {
+  width: 420px;
+  max-width: 100%;
+  /*height: 100%;*/
+  background: var(--color-background);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.25);
+
+  position: absolute;
+  z-index: 2;
+  max-height: 80%;
+  top: 10%;
+  left: 15px;
+  overflow-y: auto;
+  scrollbar-color: var(--scrollbar-color) var(--scrollbar-bg);
+}
+
+:host(.layout--mobile) .layout__panel {
+  width: initial;
+  max-height: initial;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+noi-brennerlec-map {
+  height: 100%;
+  width: 100%;
+}
+
+.menu-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1;
+  font-size: 1.5em;
+  background: var(--color-background);
+  color: var(--color-text);
+  display: none;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.25);
+}
+
+.menu-btn::part(button-native) {
+  padding: 8px;
+}
+
+:host(.layout--mobile) .menu-btn {
+  display: block;
+}
+
+/*** Map ***/
+.noi-map-line {
+  stroke: var(--map-line-color);
+  stroke-width: 5px;
+}
+
+.noi-marker {
+  /*position: relative; < affects icon position */
+}
+
+.noi-marker__pin {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  background-color: var(--map-marker-color);
+}
+
+.noi-marker.selected .noi-marker__pin {
+  background-color: var(--map-marker-color-bg);
+  position: relative;
+}
+
+.noi-marker__label {
+  position: absolute;
+  top: -12px;
+
+  display: inline-block;
+  background-color: var(--map-marker-color-bg);
+  border: 2px solid var(--map-marker-color);
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-size: 0.7em;
+  color: var(--map-marker-color);
+  font-weight: 700;
+  /*padding: 4px;*/
+}
+
+.noi-marker__icon {
+  height: 24px;
+  /*outline: 1px solid red;*/
+}
+
+.noi-marker--left .noi-marker__label {
+  margin-right: 16px;
+  right: 100%;
+}
+
+.noi-marker--right .noi-marker__label {
+  margin-left: 16px;
+  left: 100%;
+}
+
+.noi-marker--highlight .noi-marker__pin::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  border: 2px solid var(--map-marker-highlight);
+  animation: ripple 1.5s infinite;
+}
+
+
+.noi-marker.selected .noi-marker__label {
+  background-color: var(--map-marker-color);
+  color: var(--map-marker-color-bg);
+}
+
+
+/*** panel ***/
+.panel {
+}
+
+
+/*** road-event direction ***/
+
+.direction {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.direction__icon {
+  margin: 4px;
+  height: 2em;
+  width: 2em;
+  color: var(--color-secondary);
+}
+
+.direction__body {
+  flex: 1;
+}
+
+.direction__suffix {
+
+}
+
+.direction__name {
+  font-size: 1.25em;
+  font-weight: 700;
+  letter-spacing: 0.33px;
+  color: var(--color-primary);
+}
+
+.direction__description {
+  font-size: 0.875em;
+  font-weight: 700;
+  letter-spacing: 0.23px;
+  color: var(--color-secondary);
+}
+
+.close-btn {
+  font-size: 1.5em;
+  color: var(--color-text);
+  display: none;
+}
+
+.close-btn::part(button-native) {
+  padding: 6px;
+}
+
+:host(.layout--mobile) .close-btn {
+  display: initial;
+}
+
+
+/*** road-event ***/
+.road-event {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.road-event--highlight {
+  animation: blinkBg 0.5s ease-in-out 3;
+}
+
+.road-event__section {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 16px 18px;
+  background-color: var(--color-shade);
+  font-size: 1em;
+  font-weight: 700;
+  letter-spacing: 0.27px;
+  color: var(--color-text);
+}
+
+.road-event__info {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 16px;
+}
+
+
+.road-event__icon {
+  height: 48px;
+}
+
+
+.road-event__details {
+  width: 100%;
+  color: var(--color-text);
+  font-size: 0.875em;
+  font-weight: 500;
+  letter-spacing: 0.23px;
+}
+
+.road-event__date {
+  margin-top: 6px;
+  font-size: 0.9em;
+  opacity: 0.8;
+  font-weight: 300;
+}
+
+@keyframes blinkBg {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: var(--list-highlight);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
