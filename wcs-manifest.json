@@ -1,10 +1,10 @@
 {
-  "title": "Road webcam",
-  "shortName": "noi-brennerlec",
-  "description": "A responsive webcomponent for showing web camera images on Brennerlec A22 road",
-  "descriptionAbstract": "A responsive webcomponent for showing web camera images on Brennerlec A22 road",
+  "title": "Road events",
+  "shortName": "noi-a22-road-events",
+  "description": "A responsive webcomponent for showing traffic events on Brennerlec A22 road",
+  "descriptionAbstract": "A responsive webcomponent for showing traffic events on Brennerlec A22 road",
   "license": "AGPL-3.0-or-later",
-  "repositoryUrl": "https://github.com/noi-techpark/webcomponents-brennerlec.git",
+  "repositoryUrl": "https://github.com/noi-techpark/webcomp-traffic-events.git",
   "copyrightHolders": [
     {
       "name": "NOI",
