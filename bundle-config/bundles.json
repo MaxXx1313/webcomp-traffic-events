@@ -4,22 +4,29 @@
     "entryPoint": "dist/components/noi-a22-road-events.js",
     "outputDir": "dist/bundle/noi-a22-road-events",
     "copy": [
-      {
-        "src": "assets/data_a22-1km.json",
-        "dst": "."
-      },
-      {
-        "src": "assets/i18n_en.json",
-        "dst": "."
-      },
-      {
-        "src": "assets/i18n_it.json",
-        "dst": "."
-      },
-      {
-        "src": "assets/16.png",
-        "dst": "."
-      }
+      "assets/data_a22-1km.json",
+      "assets/i18n_en.json",
+      "assets/i18n_it.json",
+      "assets/icon-accident.svg",
+      "assets/icon-animal-on-road.svg",
+      "assets/icon-caution.svg",
+      "assets/icon-closure.svg",
+      "assets/icon-congestion.svg",
+      "assets/icon-current.svg",
+      "assets/icon-event.svg",
+      "assets/icon-hindrance.svg",
+      "assets/icon-maintenance.svg",
+      "assets/icon-mountaian-pass.svg",
+      "assets/icon-prohibition.svg",
+      "assets/icon-public-transport.svg",
+      "assets/icon-restiction.svg",
+      "assets/icon-road-condition.svg",
+      "assets/icon-road-work.svg",
+      "assets/icon-special.svg",
+      "assets/icon-speed-camera.svg",
+      "assets/icon-traffic-event.svg",
+      "assets/icon-trail-closure.svg",
+      "assets/icon-weather-related.svg"
     ]
   }
 ]

@@ -36,7 +36,26 @@
       "data_a22-1km.json",
       "i18n_en.json",
       "i18n_it.json",
-      "16.png"
+      "icon-accident.svg",
+      "icon-animal-on-road.svg",
+      "icon-caution.svg",
+      "icon-closure.svg",
+      "icon-congestion.svg",
+      "icon-current.svg",
+      "icon-event.svg",
+      "icon-hindrance.svg",
+      "icon-maintenance.svg",
+      "icon-mountaian-pass.svg",
+      "icon-prohibition.svg",
+      "icon-public-transport.svg",
+      "icon-restiction.svg",
+      "icon-road-condition.svg",
+      "icon-road-work.svg",
+      "icon-special.svg",
+      "icon-speed-camera.svg",
+      "icon-traffic-event.svg",
+      "icon-trail-closure.svg",
+      "icon-weather-related.svg"
     ],
     "scripts": [
       {
