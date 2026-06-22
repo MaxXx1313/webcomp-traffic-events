@@ -90,10 +90,6 @@ Here is an example of dark mode styles:
 
 ```css
 noi-a22-road-events.dark-mode {
-  font-family: "Roboto", serif;
-  outline: 1px solid red;
-  margin: 5px;
-
   --color-primary: rgb(224, 224, 224);
   --color-secondary: rgb(23, 162, 184);
   --color-text: #FFF;
