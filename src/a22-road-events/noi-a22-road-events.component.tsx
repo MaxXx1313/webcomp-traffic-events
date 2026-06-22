@@ -163,7 +163,7 @@ export class NoiA22RoadEventsComponent implements StencilComponent {
       html: `
             <div class="noi-marker__pin" data-marker-id="${itemHid}"></div>
             <div class="noi-marker__label">
-                <img class="noi-marker__icon" src="${eInfo.EventIcon}" alt="${eInfo.EventIcon}" />
+                <img class="noi-marker__icon" src="${eInfo.EventIcon}" alt="${eInfo.EventIconAlt}" />
                 <div class="noi-marker__direction">${direction === 'S' ? '▼ S' : '▲ N'}</div>
             </div>
           `,
@@ -331,7 +331,7 @@ export class NoiA22RoadEventsComponent implements StencilComponent {
                  onClick={_onClick}>
 
       <div class="road-event__info">
-        <img class="road-event__icon" src={eInfo.EventIcon} alt={eInfo.EventIcon}/>
+        <img class="road-event__icon" src={eInfo.EventIcon} alt={eInfo.EventIconAlt}/>
         <div class="road-event__details">
           {/*<div class="road-event__title">{itemTitle}</div>*/}
           <div class="road-event__description">{itemDetails}</div>
