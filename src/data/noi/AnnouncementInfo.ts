@@ -51,5 +51,6 @@ export interface AnnouncementShortInfo {
   TagIds: AnnouncementInfo['TagIds'];
 
   EventIcon: string;
+  EventIconAlt: string;
   Direction: 'south' | 'north' | 'both' | null;
 }

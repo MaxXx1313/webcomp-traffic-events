@@ -70,9 +70,18 @@ async function _generateBundle(config, jobName) {
   if (config.copy?.length) {
     for (const copyConfig of config.copy) {
 
-      const srcFile = path.join(PROJECT_ROOT, copyConfig.src);
-      const srcFilename = path.basename(srcFile);
-      const dstFile = path.join(PROJECT_ROOT, config.outputDir, copyConfig.dst, srcFilename);
+      let srcFilename, srcFile, dstFile;
+      if (typeof copyConfig === 'string') {
+        // config is a string
+        srcFile = path.join(PROJECT_ROOT, copyConfig);
+        srcFilename = path.basename(srcFile);
+        dstFile = path.join(PROJECT_ROOT, config.outputDir, '.', srcFilename);
+      } else {
+        // config is an object
+        srcFile = path.join(PROJECT_ROOT, copyConfig.src);
+        srcFilename = path.basename(srcFile);
+        dstFile = path.join(PROJECT_ROOT, config.outputDir, copyConfig.dst, srcFilename);
+      }
 
       console.log(`[${LOGTAG}]   copy "${srcFilename}"`);
       fs.cpSync(srcFile, dstFile, {recursive: true});

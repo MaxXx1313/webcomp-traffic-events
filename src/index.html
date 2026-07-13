@@ -38,19 +38,34 @@ Output:
 
 
 <div>
-  <button onclick="webcam.style.width = '500px'">size x1</button>
-  <button onclick="webcam.style.width = '800px'">size x2</button>
-  <button onclick="webcam.style.width = '100%'">size full</button>
-  <button onclick="webcam.layout = 'mobile'">layout mobile</button>
-  <button onclick="webcam.layout = 'tablet'">layout tablet</button>
-  <button onclick="webcam.layout = 'desktop'">layout desktop</button>
-  <button onclick="webcam.layout = 'auto'">layout auto</button>
-  <button onclick="webcam.language = 'en'">lang: en</button>
-  <button onclick="webcam.language = 'it'">lang: it</button>
-  <button onclick="webcam.language = 'xx'">lang: xx (missing)</button>
-  <button onclick="webcam.language = null">lang: auto</button>
-  <button onclick="webcam.classList.remove('dark-mode')">styles: default</button>
-  <button onclick="webcam.classList.add('dark-mode')">styles: dark mode</button>
+  <div class="btn-group">
+    <div class="btn-group__name">Size</div>
+    <button onclick="webcam.style.width = '500px'">mobile</button>
+    <button onclick="webcam.style.width = '890px'">tablet</button>
+    <button onclick="webcam.style.width = '100%'">full</button>
+    <button onclick="webcam.style.width = '968px'; webcam.style.height = '800px'">preview</button>
+  </div>
+  <div class="btn-group">
+    <div class="btn-group__name">layout</div>
+    <button onclick="webcam.layout = 'mobile'">mobile</button>
+    <button onclick="webcam.layout = 'tablet'">tablet</button>
+    <button onclick="webcam.layout = 'desktop'">desktop</button>
+    <button onclick="webcam.layout = 'auto'">auto</button>
+  </div>
+
+  <div class="btn-group">
+    <div class="btn-group__name">language</div>
+    <button onclick="webcam.language = 'en'">lang: en</button>
+    <button onclick="webcam.language = 'it'">lang: it</button>
+    <button onclick="webcam.language = 'xx'">lang: xx (missing)</button>
+    <button onclick="webcam.language = null">lang: auto</button>
+  </div>
+
+  <div class="btn-group">
+    <div class="btn-group__name">styles</div>
+    <button onclick="webcam.classList.remove('dark-mode')">styles: default</button>
+    <button onclick="webcam.classList.add('dark-mode')">styles: dark mode</button>
+  </div>
 
   <!-- font size     -->
   <script>
@@ -59,11 +74,17 @@ Output:
         webcam.style.fontSize = (currentSize + change) + 'px';
       }
     </script>
-    <button onclick="changeFontSize(-1)">font -</button>
-    <button onclick="changeFontSize(1)">font +</button>
+    <div class="btn-group">
+      <div class="btn-group__name">actions</div>
+      <button onclick="changeFontSize(-1)">font -</button>
+      <button onclick="changeFontSize(1)">font +</button>
+      <button onclick="webcam.refreshData()">refreshData</button>
+    </div>
+
 </div>
 <div style="height: 8px"></div>
-<div>
+<div class="btn-group">
+  <div class="btn-group__name">filters</div>
   <button onclick="webcam.direction = 'north'">d: north</button>
   <button onclick="webcam.direction = 'south'">d: south</button>
   <button onclick="webcam.direction = 'both'">d: both</button>
@@ -105,6 +126,34 @@ Output:
   noi-a22-road-events.dark-mode::part(menu-btn) {
     box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.25);
     border: 1px solid #A0A0A0;
+  }
+</style>
+
+
+<style>
+  .btn-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5ch;
+    position: relative;
+
+    padding: 4px;
+    padding-bottom: 3ch;
+    margin: 2px;
+    border: 1px solid gray;
+    border-radius: 4px;
+  }
+
+  .btn-group .btn-group__name {
+    padding: 4px;
+    padding-right: 1ch;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    text-transform: lowercase;
   }
 </style>
 

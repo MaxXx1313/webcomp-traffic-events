@@ -15,7 +15,6 @@ export class TrafficDataService {
 
   getRoutePath() {
     const dataPath = getAssetPath('data_a22-1km.json');
-    // console.log('[WebcamDataService] dataPath', dataPath);
     return fetch(dataPath)
       .then(r => r.json() as Promise<Array<{ lat: number, lng: number }>>);
   }
@@ -45,6 +44,8 @@ export class TrafficDataService {
 
 
 function __convertToShortInfo(d: AnnouncementInfo): AnnouncementShortInfo {
+  const eventIcon = _getIcon(d.TagIds);
+
   return {
     Id: d.Id,
     Geo: d.Geo,
@@ -53,7 +54,9 @@ function __convertToShortInfo(d: AnnouncementInfo): AnnouncementShortInfo {
     Detail: d.Detail,
     Shortname: d.Shortname,
     TagIds: d.TagIds,
-    EventIcon: getAssetPath('16.png'), // TODO: icon will be updated
+    EventIcon: getAssetPath(eventIcon),
+    EventIconAlt: eventIcon,
+    // EventIcon: getAssetPath('16.png'), // TODO: icon will be updated
     Direction: _getDirection(d),
   };
 }
@@ -77,3 +80,60 @@ function _getDirection(d: AnnouncementInfo): AnnouncementShortInfo['Direction'] 
   console.warn('Unable to detect direction: ', d);
   return null;
 }
+
+
+const _tagsIcon_default = 'icon-caution.svg';
+const _tagsIcon_priority_0 = {
+  "traffic-event:accident": "icon-accident.svg",
+  "traffic-event:animal-on-road": "icon-animal-on-road.svg",
+  "traffic-event:caution": "icon-caution.svg",
+  "traffic-event:closure": "icon-closure.svg",
+  "traffic-event:congestion": "icon-congestion.svg",
+  "traffic-event:current": "icon-current.svg",
+  "traffic-event:event": "icon-event.svg",
+  "traffic-event:hindrance": "icon-hindrance.svg",
+  "traffic-event:maintenance": "icon-maintenance.svg",
+  "traffic-event:mountain-pass": "icon-mountaian-pass.svg",
+  "traffic-event:prohibition": "icon-prohibition.svg",
+  "traffic-event:public-transport": "icon-public-transport.svg",
+  "traffic-event:restriction": "icon-restiction.svg",
+  "traffic-event:road-condition": "icon-road-condition.svg",
+  "traffic-event:road-work": "icon-road-work.svg",
+  "traffic-event:special": "icon-special.svg",
+  "traffic-event:speed-camera": "icon-speed-camera.svg",
+  "traffic-event:weather-related": "icon-weather-related.svg",
+};
+
+const _tagsIcon_priority_1 = {
+  "announcement:trail-closure": "icon-trail-closure.svg",
+  "announcement:traffic-event": "icon-traffic-event.svg",
+}
+
+function _getIcon(tags: string[]): string {
+  let icon: string | null = null;
+
+  for (let i = tags.length - 1; i >= 0; i--) {
+    const tag = tags[i];
+    if (_tagsIcon_priority_0[tag]) {
+      icon = _tagsIcon_priority_0[tag];
+      break;
+    }
+  }
+
+  if (!icon) {
+    for (let i = tags.length - 1; i >= 0; i--) {
+      const tag = tags[i];
+      if (_tagsIcon_priority_1[tag]) {
+        icon = _tagsIcon_priority_1[tag];
+        break;
+      }
+    }
+  }
+
+  if (!icon) {
+    console.warn('No icon found for tags: ', tags);
+  }
+  return icon || _tagsIcon_default;
+}
+
+
