@@ -23,7 +23,20 @@ export interface AnnouncementInfo {
   Detail: { [languageCode: string]: DetailGeneric };
   Source: string;
   TagIds: string[];
-  // "Mapping":
+  Mapping: {
+    ProviderA22Open: {
+      // example: "0611848722885"
+      Id: string;
+      // example: "Nord"
+      Iddirezione: 'Nord' | 'Sud' | 'Entrambe';
+      // example: "128.9"
+      MetroFine: string;
+      // example: "128.9"
+      MetroInizio: string;
+      // example: "2026-07-14T10:10:00.304Z"
+      SyncTime: string;
+    }
+  }
   Shortname: string; // "Current Situation - A22, km 313.1-313.1, South",
   StartTime: DateTimeString;
   EndTime?: DateTimeString;
