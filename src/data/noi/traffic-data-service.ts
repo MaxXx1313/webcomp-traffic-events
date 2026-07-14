@@ -45,6 +45,7 @@ export class TrafficDataService {
 
 function __convertToShortInfo(d: AnnouncementInfo): AnnouncementShortInfo {
   const eventIcon = _getIcon(d.TagIds);
+  const direction = _getDirection(d) || _parseDirectionFromDescription(d);
 
   return {
     Id: d.Id,
@@ -57,13 +58,28 @@ function __convertToShortInfo(d: AnnouncementInfo): AnnouncementShortInfo {
     EventIcon: getAssetPath(eventIcon),
     EventIconAlt: eventIcon,
     // EventIcon: getAssetPath('16.png'), // TODO: icon will be updated
-    Direction: _getDirection(d),
+    Direction: direction,
   };
 }
 
 
-// TODO: _getDirection is temporary
 function _getDirection(d: AnnouncementInfo): AnnouncementShortInfo['Direction'] {
+
+  const directionLC = d.Mapping?.ProviderA22Open?.Iddirezione?.toLowerCase();
+  switch (directionLC) {
+    case 'nord':
+      return 'north';
+    case 'sud':
+      return 'south';
+    case 'entrambe':
+      return 'both';
+    default:
+      console.warn('Value is missing or unknown (Mapping.ProviderA22Open.Iddirezione):', directionLC, d);
+      return null;
+  }
+}
+
+function _parseDirectionFromDescription(d: AnnouncementInfo): AnnouncementShortInfo['Direction'] {
   const isNorth = d.Shortname.includes('North');
   const isSouth = d.Shortname.includes('South');
   const isBoth = d.Shortname.includes('Both');
