@@ -69,21 +69,24 @@ Define the web component like this:
 
 This is regular CSS styles for the component, but specific adjustment is supported.
 
-| Name                     | Description                        |
-| ------------------------ | ---------------------------------- |
-| `--color-background`     | Background color                   |
-| `--color-border`         | Border color                       |
-| `--color-primary`        | Primary color                      |
-| `--color-secondary`      | Secondary color                    |
-| `--color-shade`          | Shade color for traffic info label |
-| `--color-text`           | Text color                         |
-| `--list-highlight`       | Event list highlight color         |
-| `--map-line-color`       | Map line color                     |
-| `--map-marker-color`     | Map marker color                   |
-| `--map-marker-color-bg`  | Map marker background              |
-| `--map-marker-highlight` | Map marker highlight color         |
-| `--scrollbar-bg`         | Scrollbar background color         |
-| `--scrollbar-color`      | Scrollbar thumb color              |
+| Name                      | Description                        |
+| ------------------------- | ---------------------------------- |
+| `--color-background`      | Background color                   |
+| `--color-border`          | Border color                       |
+| `--color-primary`         | Primary color                      |
+| `--color-secondary`       | Secondary color                    |
+| `--color-shade`           | Shade color for traffic info label |
+| `--color-text`            | Text color                         |
+| `--list-color-background` | List background color              |
+| `--list-color-separator`  | List separator color               |
+| `--list-color-text`       | List text color                    |
+| `--map-line-color`        | Map line color                     |
+| `--map-marker-color`      | Map marker color                   |
+| `--map-marker-color-bg`   | Map marker background              |
+| `--map-marker-highlight`  | Map marker highlight color         |
+| `--scrollbar-bg`          | Scrollbar background color         |
+| `--scrollbar-color`       | Scrollbar thumb color              |
+
 
 
 Here is an example of dark mode styles:
@@ -96,8 +99,10 @@ noi-a22-road-events.dark-mode {
   --color-background: #333;
   --color-shade: #555;
   --color-border: #A0A0A0;
+  --map-marker-highlight: var(--color-secondary);
   --map-line-color: #5d8d58;
   --map-marker-color-bg: #282828;
+  --list-highlight: #FAFAFA;
   --map-filter: grayscale(100%) invert(1);
   --scrollbar-color: #CCC;
   --scrollbar-bg: #333;
@@ -109,6 +114,9 @@ noi-a22-road-events.dark-mode::part(panel) {
 noi-a22-road-events.dark-mode::part(menu-btn) {
   box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.25);
   border: 1px solid #A0A0A0;
+}
+noi-a22-road-events.dark-mode::part(list-item-selected) {
+  border-color: var(--color-secondary);
 }
 ```
 

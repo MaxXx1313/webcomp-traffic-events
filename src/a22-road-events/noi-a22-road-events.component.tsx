@@ -12,12 +12,19 @@ import { detectAllowedBrowserLanguage, translatePropertyInner } from "../utils/l
 import { watchElementSize } from "../utils/resize-observer";
 import { LanguageDataService } from "../data/language/language-data-service";
 
+
+const PANEL_WIDTH = 420; // same as CSS value. if used as css variable - can be received dynamically
+
 /**
  * Road traffic events component
  *
  * @part map - Map
  * @part panel - Info panel
  * @part menu-btn - Open panel button (mobile only)
+ * @part list-item - Panel list item
+ * @part list-item-selected - Panel list item when selected
+ * @part map-item - Map marker
+ * @part map-item-selected - Map marker when selected
  */
 @Component({
   tag: 'noi-a22-road-events',
@@ -142,28 +149,24 @@ export class NoiA22RoadEventsComponent implements StencilComponent {
 
       if (this.direction !== 'north') {
         if (eInfo.Direction === 'south' || eInfo.Direction === 'both' || !eInfo.Direction) {
-          const marker = this.__createMarker(eInfo, 'S');
-          this.markerMap[eInfo.Id + '-' + 'S'] = marker;
-          this.trafficEventsLayer.addLayer(marker);
+          this.__addMarker(eInfo, 'S');
         }
       }
       if (this.direction !== 'south') {
         if (eInfo.Direction === 'north' || eInfo.Direction === 'both' || !eInfo.Direction) {
-          const marker = this.__createMarker(eInfo, 'N');
-          this.markerMap[eInfo.Id + '-' + 'N'] = marker;
-          this.trafficEventsLayer.addLayer(marker);
+          this.__addMarker(eInfo, 'N');
         }
       }
     }
   }
 
-  __createMarker(eInfo: AnnouncementShortInfo, direction: 'S' | 'N') {
+  __addMarker(eInfo: AnnouncementShortInfo, direction: 'S' | 'N') {
     const itemHid = eInfo.Id + '-' + direction;
     const markerIcon = new DivIcon({
       html: `
             <div class="noi-marker__pin" data-marker-id="${itemHid}"></div>
             <div class="noi-marker__label">
-                <img class="noi-marker__icon" src="${eInfo.EventIcon}" alt="${eInfo.EventIconAlt}" />
+                <noi-icon class="noi-marker__icon" src="${eInfo.EventIcon}"></noi-icon>
                 <div class="noi-marker__direction">${direction === 'S' ? '▼ S' : '▲ N'}</div>
             </div>
           `,
@@ -176,6 +179,13 @@ export class NoiA22RoadEventsComponent implements StencilComponent {
       lat: eInfo.Geo.position.Latitude,
       lng: eInfo.Geo.position.Longitude
     }, {icon: markerIcon});
+
+    this.markerMap[eInfo.Id + '-' + direction] = marker;
+    this.trafficEventsLayer.addLayer(marker);
+
+    const markerNode = this.getMapMarkerById(itemHid);
+    markerNode.setAttribute('part', 'map-item');
+
     marker.addEventListener('click', () => {
       this.openPanel();
       this._bringToFront(marker);
@@ -205,51 +215,81 @@ export class NoiA22RoadEventsComponent implements StencilComponent {
 
   private _focusMapHidLast: string | null = null;
 
+  /**
+   * focus map marker
+   */
   _focusMapElement(itemHid: string) {
 
-    if (this._focusMapHidLast === itemHid) {
-      return;
-    }
-
-    this._focusMapHidLast = itemHid;
-    const marker = this.markerMap[itemHid];
-    this._bringToFront(marker);
-    if (marker && this.map) {
-      this.map.setView(marker.getLatLng());
+    // remove old selection
+    const elementToUnselect = this.getMapMarkerById(this._focusMapHidLast);
+    if (elementToUnselect) {
+      elementToUnselect.classList.remove('selected');
+      elementToUnselect.setAttribute('part', 'map-item');
     }
 
     //
-    const elementChild = this.el.shadowRoot.querySelector(`[data-marker-id="${itemHid}"]`);
-    const element = elementChild?.closest('.noi-marker');
+    this._focusMapHidLast = itemHid;
+
+    // set new selection
+    const element = this.getMapMarkerById(itemHid);
     if (element) {
-      element.classList.add('noi-marker--highlight');
-      setTimeout(() => {
-        element.classList.remove('noi-marker--highlight');
-        this._focusMapHidLast = null;
-      }, 3000);
+      element.classList.add('selected');
+      element.setAttribute('part', 'map-item map-item-selected');
     }
 
+    // move map
+    const marker = this.markerMap[itemHid];
+    this._bringToFront(marker);
+    if (marker && this.map) {
+      const paddingLeft = this.layoutResolved === 'mobile' ? 0 : PANEL_WIDTH;
+
+      // trick to apply padding on map view
+      const lat = marker.getLatLng().lat;
+      const lng = marker.getLatLng().lng;
+      this.map.fitBounds([[lat, lng], [lat, lng]], {
+        maxZoom: this.map.getZoom(),
+        paddingTopLeft: [paddingLeft, 0]
+      });
+    }
   }
 
   private _focusListHidLast: string | null = null;
 
+  /**
+   * focus list element
+   */
   _focusListElement(itemHid: string) {
-    if (this._focusListHidLast === itemHid) {
-      return;
+
+    // remove old selection
+    const elementToUnselect = this.getListItemById(this._focusListHidLast);
+    if (elementToUnselect) {
+      elementToUnselect.classList.remove('selected');
+      elementToUnselect.setAttribute('part', 'list-item');
     }
+
     this._focusListHidLast = itemHid;
-    const element = this.el.shadowRoot.querySelector(`[data-item-id="${itemHid}"]`);
+
+    // set new selection
+    const element = this.getListItemById(itemHid);
     if (element) {
       element?.scrollIntoView();
 
-      element.classList.add('road-event--highlight');
-      setTimeout(() => {
-        element.classList.remove('road-event--highlight');
-        this._focusListHidLast = null;
-      }, 3000);
+      element.classList.add('selected');
+      element.setAttribute('part', 'list-item list-item-selected');
     }
   }
 
+
+  getMapMarkerById(itemHid: string) {
+    const elementChild = this.el.shadowRoot.querySelector(`[data-marker-id="${itemHid}"]`);
+    const element = elementChild?.closest('.noi-marker');
+    return element;
+  }
+
+  getListItemById(itemHid: string) {
+    const element = this.el.shadowRoot.querySelector(`[data-item-id="${itemHid}"]`);
+    return element;
+  }
 
   render() {
     return (
@@ -324,19 +364,22 @@ export class NoiA22RoadEventsComponent implements StencilComponent {
     const itemHid = eInfo.Id + '-' + direction;
     const _onClick = () => {
       this.closePanel();
+      this._focusListElement(itemHid);
       this._focusMapElement(itemHid);
     };
     return (<div data-item-id={itemHid}
                  class="road-event"
+                 part="list-item"
                  onClick={_onClick}>
 
       <div class="road-event__info">
-        <img class="road-event__icon" src={eInfo.EventIcon} alt={eInfo.EventIconAlt}/>
+        <noi-icon class="road-event__icon" src={eInfo.EventIcon}></noi-icon>
         <div class="road-event__details">
           {/*<div class="road-event__title">{itemTitle}</div>*/}
           <div class="road-event__description">{itemDetails}</div>
           {/*<div class="road-event__date">Started: {myFormatDate(eInfo?.StartTime)}</div>*/}
-          <div class="road-event__date">{this.languageService.translate('Ultimo aggiornamento:')} {myFormatDate(eInfo?.LastChange)}</div>
+          <div
+            class="road-event__date">{this.languageService.translate('Ultimo aggiornamento:')} {myFormatDate(eInfo?.LastChange)}</div>
           {/*<div class="road-event__date">Tags: {eInfo?.TagIds?.join(', ')}</div>*/}
         </div>
       </div>

@@ -63,8 +63,9 @@ Output:
 
   <div class="btn-group">
     <div class="btn-group__name">styles</div>
-    <button onclick="webcam.classList.remove('dark-mode')">styles: default</button>
-    <button onclick="webcam.classList.add('dark-mode')">styles: dark mode</button>
+    <button onclick="webcam.classList.remove('dark-mode','alt-mode')">styles: default</button>
+    <button onclick="webcam.classList.remove('dark-mode','alt-mode'); webcam.classList.add('dark-mode')">styles: dark mode</button>
+    <button onclick="webcam.classList.remove('dark-mode','alt-mode'); webcam.classList.add('dark-mode', 'alt-mode')">styles: dark alt mode</button>
   </div>
 
   <!-- font size     -->
@@ -98,13 +99,12 @@ Output:
   noi-a22-road-events {
     font-family: "Roboto", serif;
     outline: 1px solid red;
-    margin: 5px;
+    margin: 5px auto;
   }
 
   noi-a22-road-events.dark-mode {
     font-family: "Roboto", serif;
     outline: 1px solid red;
-    margin: 5px;
 
     --color-primary: rgb(224, 224, 224);
     --color-secondary: rgb(23, 162, 184);
@@ -112,9 +112,10 @@ Output:
     --color-background: #333;
     --color-shade: #555;
     --color-border: #A0A0A0;
+    --map-marker-highlight: var(--color-secondary);
     --map-line-color: #5d8d58;
     --map-marker-color-bg: #282828;
-    --list-highlight: #5a23c7;
+    --list-highlight: #FAFAFA;
     --map-filter: grayscale(100%) invert(1);
     --scrollbar-color: #CCC;
     --scrollbar-bg: #333;
@@ -126,6 +127,21 @@ Output:
   noi-a22-road-events.dark-mode::part(menu-btn) {
     box-shadow: 0 4px 20px 0 rgba(255, 255, 255, 0.25);
     border: 1px solid #A0A0A0;
+  }
+  noi-a22-road-events.dark-mode::part(list-item-selected) {
+    border-color: var(--color-secondary);
+  }
+
+  /* alternative dark mode */
+  noi-a22-road-events.alt-mode::part(list-item) {
+    border: 0;
+  }
+  noi-a22-road-events.alt-mode::part(list-item-selected) {
+    --list-color-text: var(--color-background);
+    --list-color-background: var(--color-text);
+  }
+  noi-a22-road-events.alt-mode::part(map-item-selected) {
+    --map-marker-color: var(--color-text);
   }
 </style>
 

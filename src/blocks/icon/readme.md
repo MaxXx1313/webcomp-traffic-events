@@ -24,6 +24,7 @@ Icon size can be changed by 'font-size' style
 | Property | Attribute | Description | Type     | Default     |
 | -------- | --------- | ----------- | -------- | ----------- |
 | `name`   | `name`    | icon name   | `string` | `undefined` |
+| `src`    | `src`     | icon url    | `string` | `undefined` |
 
 
 ## Dependencies

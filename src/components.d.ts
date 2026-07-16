@@ -70,6 +70,10 @@ export namespace Components {
           * icon name
          */
         "name": IconName | string;
+        /**
+          * icon url
+         */
+        "src"?: string;
     }
 }
 export interface NoiBrennerlecMapCustomEvent<T> extends CustomEvent<T> {
@@ -207,6 +211,10 @@ declare namespace LocalJSX {
           * icon name
          */
         "name"?: IconName | string;
+        /**
+          * icon url
+         */
+        "src"?: string;
     }
 
     interface NoiA22RoadEventsAttributes {
@@ -220,6 +228,7 @@ declare namespace LocalJSX {
     }
     interface NoiIconAttributes {
         "name": IconName | string;
+        "src": string;
     }
 
     interface IntrinsicElements {

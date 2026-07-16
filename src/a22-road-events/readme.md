@@ -39,30 +39,36 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part         | Description                     |
-| ------------ | ------------------------------- |
-| `"map"`      | Map                             |
-| `"menu-btn"` | Open panel button (mobile only) |
-| `"panel"`    | Info panel                      |
+| Part                   | Description                     |
+| ---------------------- | ------------------------------- |
+| `"list-item"`          | Panel list item                 |
+| `"list-item-selected"` | Panel list item when selected   |
+| `"map"`                | Map                             |
+| `"map-item"`           | Map marker                      |
+| `"map-item-selected"`  | Map marker when selected        |
+| `"menu-btn"`           | Open panel button (mobile only) |
+| `"panel"`              | Info panel                      |
 
 
 ## CSS Custom Properties
 
-| Name                     | Description                        |
-| ------------------------ | ---------------------------------- |
-| `--color-background`     | Background color                   |
-| `--color-border`         | Border color                       |
-| `--color-primary`        | Primary color                      |
-| `--color-secondary`      | Secondary color                    |
-| `--color-shade`          | Shade color for traffic info label |
-| `--color-text`           | Text color                         |
-| `--list-highlight`       | Event list highlight color         |
-| `--map-line-color`       | Map line color                     |
-| `--map-marker-color`     | Map marker color                   |
-| `--map-marker-color-bg`  | Map marker background              |
-| `--map-marker-highlight` | Map marker highlight color         |
-| `--scrollbar-bg`         | Scrollbar background color         |
-| `--scrollbar-color`      | Scrollbar thumb color              |
+| Name                      | Description                        |
+| ------------------------- | ---------------------------------- |
+| `--color-background`      | Background color                   |
+| `--color-border`          | Border color                       |
+| `--color-primary`         | Primary color                      |
+| `--color-secondary`       | Secondary color                    |
+| `--color-shade`           | Shade color for traffic info label |
+| `--color-text`            | Text color                         |
+| `--list-color-background` | List background color              |
+| `--list-color-separator`  | List separator color               |
+| `--list-color-text`       | List text color                    |
+| `--map-line-color`        | Map line color                     |
+| `--map-marker-color`      | Map marker color                   |
+| `--map-marker-color-bg`   | Map marker background              |
+| `--map-marker-highlight`  | Map marker highlight color         |
+| `--scrollbar-bg`          | Scrollbar background color         |
+| `--scrollbar-color`       | Scrollbar thumb color              |
 
 
 ## Dependencies
