@@ -9,7 +9,7 @@
   /**
    * @prop --color-primary: Primary color
    */
-  --color-primary: #0068B4;
+  --color-primary: #2468b4;
   /**
    * @prop --color-secondary: Secondary color
    */
@@ -283,6 +283,7 @@ noi-brennerlec-map {
 
 .road-event.selected {
   border-color: var(--color-primary);
+  --list-color-text: var(--color-primary);
 }
 
 .road-event__section {
