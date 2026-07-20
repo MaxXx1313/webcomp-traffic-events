@@ -187,14 +187,20 @@ export class NoiA22RoadEventsComponent implements StencilComponent {
     markerNode.setAttribute('part', 'map-item');
 
     marker.addEventListener('click', () => {
-      this.openPanel();
-      this._bringToFront(marker);
-      this._focusMapElement(itemHid);
       setTimeout(() => {
+        this.openPanel();
+        this._bringToFront(marker);
+        this._focusMapElement(itemHid);
         this._focusListElement(itemHid);
       });
     });
     return marker;
+  }
+
+  _unselectMarkers() {
+    console.log('unselectMarkers');
+    this._focusMapElement(null);
+    this._focusListElement(null);
   }
 
   openPanel() {
@@ -207,18 +213,19 @@ export class NoiA22RoadEventsComponent implements StencilComponent {
 
   private _lastInFront?: Marker;
 
-  _bringToFront(marker: Marker) {
+  _bringToFront(marker?: Marker) {
     this._lastInFront?.setZIndexOffset(1);
     this._lastInFront = marker;
     this._lastInFront?.setZIndexOffset(1000);
   }
 
-  private _focusMapHidLast: string | null = null;
+  private _focusMapHidLast?: string | null = null;
 
   /**
    * focus map marker
    */
-  _focusMapElement(itemHid: string) {
+  _focusMapElement(itemHid?: string) {
+    console.log('_focusMapElement', itemHid);
 
     // remove old selection
     const elementToUnselect = this.getMapMarkerById(this._focusMapHidLast);
@@ -253,12 +260,13 @@ export class NoiA22RoadEventsComponent implements StencilComponent {
     }
   }
 
-  private _focusListHidLast: string | null = null;
+  private _focusListHidLast?: string | null = null;
 
   /**
    * focus list element
    */
-  _focusListElement(itemHid: string) {
+  _focusListElement(itemHid?: string) {
+    console.log('_focusListElement', itemHid);
 
     // remove old selection
     const elementToUnselect = this.getListItemById(this._focusListHidLast);
@@ -303,7 +311,7 @@ export class NoiA22RoadEventsComponent implements StencilComponent {
         </noi-button>
 
         <div class="layout__center">
-          <noi-brennerlec-map part="map" onMapReady={e => this.mapReady(e)}></noi-brennerlec-map>
+          <noi-brennerlec-map part="map" onMapReady={e => this.mapReady(e)} onClick={()=>this._unselectMarkers()}></noi-brennerlec-map>
         </div>
       </Host>
     );
