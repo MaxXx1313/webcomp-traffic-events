@@ -280,7 +280,7 @@ export class NoiA22RoadEventsComponent implements StencilComponent {
     // set new selection
     const element = this.getListItemById(itemHid);
     if (element) {
-      element?.scrollIntoView();
+      element?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 
       element.classList.add('selected');
       element.setAttribute('part', 'list-item list-item-selected');
