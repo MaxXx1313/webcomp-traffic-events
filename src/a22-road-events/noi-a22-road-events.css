@@ -9,7 +9,7 @@
   /**
    * @prop --color-primary: Primary color
    */
-  --color-primary: #0068B4;
+  --color-primary: #2468b4;
   /**
    * @prop --color-secondary: Secondary color
    */
@@ -54,10 +54,21 @@
    */
   --map-marker-highlight: var(--color-primary);
 
+
   /**
-   * @prop --list-highlight: Event list highlight color
+   * @prop --list-color-separator: List separator color
    */
-  --list-highlight: var(--color-primary);
+  --list-color-separator: var(--color-border);
+
+  /**
+   * @prop --list-color-text: List text color
+   */
+  --list-color-text: var(--color-text);
+
+  /**
+   * @prop --list-color-background: List background color
+   */
+  --list-color-background: var(--color-background);
 
   /**
    * @prop --scrollbar-color: Scrollbar thumb color
@@ -102,6 +113,15 @@
   left: 15px;
   overflow-y: auto;
   scrollbar-color: var(--scrollbar-color) var(--scrollbar-bg);
+
+  transition: opacity ease-in-out 120ms;
+}
+
+/* don't truly hide it to avoid 'scrollIntoView' issues */
+.layout__panel--hidden {
+  /*z-index: -1;*/
+  opacity: 0;
+  pointer-events: none;
 }
 
 :host(.layout--mobile) .layout__panel {
@@ -146,6 +166,11 @@ noi-brennerlec-map {
 
 .noi-marker {
   /*position: relative; < affects icon position */
+  color: var(--map-marker-color);
+}
+
+.noi-marker.selected {
+  --map-marker-color: var(--map-marker-highlight);
 }
 
 .noi-marker__pin {
@@ -156,12 +181,8 @@ noi-brennerlec-map {
   background-color: var(--map-marker-color);
 }
 
-.noi-marker.selected .noi-marker__pin {
-  background-color: var(--map-marker-color-bg);
-  position: relative;
-}
-
 .noi-marker__label {
+  padding: 0.25em 0.5em;
   position: absolute;
   top: -12px;
 
@@ -172,13 +193,13 @@ noi-brennerlec-map {
   vertical-align: middle;
   white-space: nowrap;
   font-size: 0.7em;
-  color: var(--map-marker-color);
   font-weight: 700;
   /*padding: 4px;*/
 }
 
 .noi-marker__icon {
   height: 24px;
+  width: 24px;
   /*outline: 1px solid red;*/
 }
 
@@ -190,26 +211,8 @@ noi-brennerlec-map {
 .noi-marker--right .noi-marker__label {
   margin-left: 16px;
   left: 100%;
+  background-color: var(--map-marker-color-bg);
 }
-
-.noi-marker--highlight .noi-marker__pin::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 50%;
-  border: 2px solid var(--map-marker-highlight);
-  animation: ripple 1.5s infinite;
-}
-
-
-.noi-marker.selected .noi-marker__label {
-  background-color: var(--map-marker-color);
-  color: var(--map-marker-color-bg);
-}
-
 
 /*** panel ***/
 .panel {
@@ -272,16 +275,24 @@ noi-brennerlec-map {
 
 /*** road-event ***/
 .road-event {
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
   padding: 8px 0;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--list-color-separator);
+  cursor: pointer;
+  color: var(--list-color-text);
+  background-color: var(--list-color-background);
+
+  border: 1px solid transparent;
+  border-left: 8px solid transparent;
 }
 
-.road-event--highlight {
-  animation: blinkBg 0.5s ease-in-out 3;
+.road-event.selected {
+  border-color: var(--color-primary);
+  --list-color-text: var(--color-primary);
 }
 
 .road-event__section {
@@ -305,12 +316,12 @@ noi-brennerlec-map {
 
 .road-event__icon {
   height: 48px;
+  width: 48px;
 }
 
 
 .road-event__details {
   width: 100%;
-  color: var(--color-text);
   font-size: 0.875em;
   font-weight: 500;
   letter-spacing: 0.23px;
@@ -321,27 +332,4 @@ noi-brennerlec-map {
   font-size: 0.9em;
   opacity: 0.8;
   font-weight: 300;
-}
-
-@keyframes blinkBg {
-  0% {
-    background-color: transparent;
-  }
-  50% {
-    background-color: var(--list-highlight);
-  }
-  100% {
-    background-color: transparent;
-  }
-}
-
-@keyframes ripple {
-  0% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(3);
-    opacity: 0;
-  }
 }

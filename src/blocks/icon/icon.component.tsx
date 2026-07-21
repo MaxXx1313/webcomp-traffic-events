@@ -2,12 +2,16 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import { Component, h, Prop } from "@stencil/core";
+import { Component, Prop, State, Watch, h } from "@stencil/core";
 
 export type IconName = 'close'
   | 'stations'
   | 'search'
   ;
+
+// Shared cache across all instances of this component
+const iconCache = new Map<string, Promise<string> | string>();
+
 
 /**
  * (INTERNAL) render an icon.
@@ -29,8 +33,77 @@ export class IconComponent {
   @Prop()
   name: IconName | string;
 
+  /**
+   * icon url
+   */
+  @Prop()
+  src?: string;
+
+  @State() svgContent: string = '';
+
+  @Watch('src')
+  onSrcChanged() {
+    this.loadIcon();
+  }
+
+  componentWillLoad() {
+    this.loadIcon();
+  }
+
+
+  private async loadIcon() {
+    if (!this.src) {
+      this.svgContent = '';
+      return;
+    }
+
+    try {
+      // 1. Check if the icon is already cached or currently fetching
+      if (iconCache.has(this.src)) {
+        this.svgContent = await iconCache.get(this.src)!;
+        return;
+      }
+
+      // 2. Create the fetch promise and store it in the cache immediately
+      const fetchPromise = fetch(this.src)
+        .then(async (response) => {
+          if (!response.ok) throw new Error(`Failed to fetch SVG`);
+          const text = await response.text();
+
+          // Update the cache with the actual text content once resolved
+          iconCache.set(this.src, text);
+          return text;
+        })
+        .catch((error) => {
+          // Remove from cache on failure so it can try again later if requested
+          iconCache.delete(this.src);
+          throw error;
+        });
+
+
+      iconCache.set(this.src, fetchPromise);
+      this.svgContent = await fetchPromise;
+
+    } catch (error) {
+      console.error('Error loading icon:', error);
+      this.svgContent = ''; // Fallback to empty on error
+    }
+  }
+
   render() {
-    switch (this.name) {
+    if(this.svgContent) {
+      return (<span
+        class="icon-wrapper"
+        innerHTML={this.svgContent}
+      />);
+    } else {
+      return (<span class="icon-wrapper">{this._getContentByName(this.name)}</span>);
+    }
+  }
+
+  _getContentByName(iconName: string) {
+
+    switch (iconName) {
       case 'menu':
         return (<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"
@@ -45,12 +118,14 @@ export class IconComponent {
         </svg>);
       case 'arrow-down':
         return (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
-          <path fill="currentColor" d="M32 16L29.18 13.18L18 24.34L18 0L14 0L14 24.34L2.8399999 13.16L0 16L16 32L32 16Z" fill-rule="evenodd"/>
+          <path fill="currentColor" d="M32 16L29.18 13.18L18 24.34L18 0L14 0L14 24.34L2.8399999 13.16L0 16L16 32L32 16Z"
+                fill-rule="evenodd"/>
         </svg>);
       case 'arrow-up':
         return (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
           <path transform="rotate(180 16 16)"
-                fill="currentColor" d="M32 16L29.18 13.18L18 24.34L18 0L14 0L14 24.34L2.8399999 13.16L0 16L16 32L32 16Z" fill-rule="evenodd"/>
+                fill="currentColor" d="M32 16L29.18 13.18L18 24.34L18 0L14 0L14 24.34L2.8399999 13.16L0 16L16 32L32 16Z"
+                fill-rule="evenodd"/>
         </svg>);
     }
   }
