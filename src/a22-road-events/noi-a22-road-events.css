@@ -113,6 +113,15 @@
   left: 15px;
   overflow-y: auto;
   scrollbar-color: var(--scrollbar-color) var(--scrollbar-bg);
+
+  transition: opacity ease-in-out 120ms;
+}
+
+/* don't truly hide it to avoid 'scrollIntoView' issues */
+.layout__panel--hidden {
+  /*z-index: -1;*/
+  opacity: 0;
+  pointer-events: none;
 }
 
 :host(.layout--mobile) .layout__panel {
