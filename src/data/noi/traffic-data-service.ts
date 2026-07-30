@@ -105,8 +105,8 @@ const _tagsIcon_priority_0 = {
   "traffic-event:caution": "icon-caution.svg",
   "traffic-event:closure": "icon-closure.svg",
   "traffic-event:congestion": "icon-congestion.svg",
-  "traffic-event:current": "icon-current.svg",
-  "traffic-event:event": "icon-event.svg",
+  "traffic-event:current": "icon-info.svg",
+  "traffic-event:event": "icon-info.svg",
   "traffic-event:hindrance": "icon-hindrance.svg",
   "traffic-event:maintenance": "icon-maintenance.svg",
   "traffic-event:mountain-pass": "icon-mountaian-pass.svg",
@@ -122,7 +122,7 @@ const _tagsIcon_priority_0 = {
 
 const _tagsIcon_priority_1 = {
   "announcement:trail-closure": "icon-trail-closure.svg",
-  "announcement:traffic-event": "icon-traffic-event.svg",
+  "announcement:traffic-event": "icon-info.svg",
 }
 
 function _getIcon(tags: string[]): string {
